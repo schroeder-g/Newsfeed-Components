@@ -88,26 +88,62 @@ const data = [
   }
 ];
 
-/* Step 1: Write a component called 'articleMaker' to create an article. You want your component to return markup like the template below: 
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+function articleMaker (articleDataObj){
+  /* 1. A Instantiate Articles w/ classes*/
+  const articleModelObj = document.createElement("div")
+    articleModelObj.classList.add("article")
+  const articleTitle = document.createElement("h2")
+  const articleDate = document.createElement("p")
+    articleDate.classList.add("date")
+  const articleParagraphOne = document.createElement("p")
+    articleParagraphOne.classList.add("paragraph")
+  const articleParagraphTwo = document.createElement("p")
+    articleParagraphTwo.classList.add("paragraph")
+  const articleParagraphThree = document.createElement("p")
+  articleParagraphThree.classList.add("paragraph")
+  const articleButton = document.createElement("span")
+  articleButton.classList.add("button")
+  
+  // 1. retreive className from callback function (title, date, par)
+  articleTitle.textContent = articleDataObj.title
+  articleDate.textContent = articleDataObj.date
+  articleParagraphOne.textContent = articleDataObj.firstParagraph
+  articleParagraphTwo.textContent = articleDataObj.secondParagraph
+  articleParagraphThree.textContent = articleDataObj.thirdParagraph
+  articleButton.textContent = "+"
+  
+  // 1.b Add event listener to  expandButton span. this toggle the class 'article-open' on the 'article' div.
+  articleModelObj.addEventListener("click", () => {
+    articleModelObj.classList.toggle("article-open")
+  })
+  
+  //Apend Els to Article sequentially
+  articleModelObj.appendChild(articleTitle)
+  articleModelObj.appendChild(articleDate)
+  // {three separate paragraph elements
+  articleModelObj.appendChild(articleParagraphOne) 
+  articleModelObj.appendChild(articleParagraphTwo)
+  articleModelObj.appendChild(articleParagraphThree)
+  articleModelObj.appendChild(articleButton)
+  
+  return articleModelObj
+  
+}
+addArticle({title: "I am the Walrus", date: "7/7/20", firstParagraph: "Lorem lorem Lorem Lorem", secondParagraph: "loremmmmmmmmmmm", thirdParagraph: "l.o.r.e.m."})
 
-    {three separate paragraph elements}
-
-    <span class='expandButton'>+</span>
-  </div>
-
-  Hint: You will need to use createElement more than once here!
-
-  Your function should take either an object as its one argument, or 5 separate strings mapping to each property of an article object.
-
-  Step 2: Add an event listener to the expandButton span. This listener should toggle the class 'article-open' on the 'article' div.
-
-  Step 3: Don't forget to return something from your function!
-
-  Step 4: Outside your function, loop over the data. At each iteration you'll use your component to create an article and append it to the DOM inside the 'articles' div.
-
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+for (let articleInDB = 0; articleInDB < data.length; articleInDB++){
+    const theActualArticle = articleMaker(data[articleInDB])
+    document.body.appendChild(theActualArticle)
+  }
+  
+  /* 
+Step 5: Add a new article to the array. 
+Make sure it is in the same format as the others. 
+Refresh the page to see the new article.
 */
+function addArticle(articleObj){
+  data.push(articleObj)
+}
+
+console.log(data)
